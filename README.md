@@ -17,6 +17,6 @@ Run `python3 -m http.server 8000 --directory dist` and visit `http://localhost:8
 
 Scores stay in the browser during a round and do not go to Google Classroom. `dist/BRAVURA-LICENSE.txt` covers the embedded music symbol outlines. Other code licensing has not been specified; choose a license before inviting public reuse or contributions.
 
-## Dark mode
+## Link
 
-Students can use the button in the upper-right corner of the game to switch between light and dark mode. The choice is remembered on that device when browser storage is available.
+https://pcmono.github.io/scale-game/
