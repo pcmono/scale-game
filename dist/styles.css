@@ -32,3 +32,12 @@
 :root[data-theme="dark"] .feedback.good{color:#9ae3bb}
 :root[data-theme="dark"] .feedback.bad{color:#ffb0a7}
 :root[data-theme="dark"] .review div{background:#2b4557}
+
+/* The scale length sits directly under the opening question. */
+.scale-length{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 18px}
+.length-option{border:2px solid #b5d4dc;background:#f2f9fb;color:#162841;border-radius:12px;padding:11px 20px;min-height:48px;font-weight:750}
+.length-option:hover,.length-option:focus-visible{border-color:#167a98;background:#dbf2f8}
+.length-option.selected{border-color:#1d7895;background:#c9edf6;box-shadow:inset 0 0 0 2px #1d7895}
+:root[data-theme="dark"] .length-option{background:#243c4f;border-color:#608095;color:#f0f7f9}
+:root[data-theme="dark"] .length-option:hover,:root[data-theme="dark"] .length-option:focus-visible{background:#31546a;border-color:#a3ddeb}
+:root[data-theme="dark"] .length-option.selected{background:#315a72;border-color:#a5dce9;box-shadow:inset 0 0 0 2px #a5dce9}

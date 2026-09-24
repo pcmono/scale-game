@@ -1,4 +1,4 @@
-import {DATA, makeOptions, shuffle, staff, diagram} from './game-core.mjs';
+import {DATA, NOTE_COUNTS, makeOptions, shuffle, staff, diagram, noteName} from './game-core.mjs';
 
 function check(condition, message) { if (!condition) throw new Error(message); }
 export const checks = [
@@ -10,6 +10,19 @@ export const checks = [
     for (const d of Object.values(DATA)) for (let n=0;n<8;n++) for (let phase=0;phase<2;phase++) {
       const {arr,correct}=makeOptions(d,n,phase);
       check(arr.length===4 && new Set(arr).size===4 && arr.filter(x=>x===correct).length===1, `${d.label}, note ${n+1}, part ${phase+1}`);
+    }
+  }],
+  ['Short rounds use their first 3 or 5 notes only', () => {
+    check(NOTE_COUNTS.join(',') === '3,5,8', 'Unexpected scale lengths');
+    for (const [count, expectedConcertNotes] of [[3, 'B♭4,C5,D5'], [5, 'B♭4,C5,D5,E♭5,F5']]) {
+      check(DATA.flute.notes.slice(0, count).join(',') === expectedConcertNotes, `${count}-note concert sequence changed`);
+      for (const d of Object.values(DATA)) for (let n = 0; n < count; n++) for (let phase = 0; phase < 2; phase++) {
+        const {arr, correct} = makeOptions(d, n, phase, Math.random, count);
+        const allowed = new Set(phase === 0 ? d.notes.slice(0, count).map(noteName) : d.patterns.slice(0, count));
+        check(arr.length === Math.min(4, allowed.size), `${d.label}: wrong answer count for ${count} notes`);
+        check(new Set(arr).size === arr.length && arr.filter(x => x === correct).length === 1, `${d.label}: duplicate or missing correct answer`);
+        check(arr.every(answer => allowed.has(answer)), `${d.label}: answer from outside ${count}-note scale`);
+      }
     }
   }],
   ['A fresh game can shuffle its notes', () => {

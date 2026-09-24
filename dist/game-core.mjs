@@ -11,6 +11,7 @@ mallets:{label:'Mallet Percussion',clef:'treble',notes:['B♭3','C4','D4','E♭4
 };
 
 export const noteName=n=>n.replace(/[0-9]/g,'');
+export const NOTE_COUNTS = [3, 5, 8];
 
 export function shuffle(items, random = Math.random) {
   const result = [...items];
@@ -21,11 +22,12 @@ export function shuffle(items, random = Math.random) {
   return result;
 }
 
-export function makeOptions(instrument, noteIndex, phase, random = Math.random) {
+export function makeOptions(instrument, noteIndex, phase, random = Math.random, noteCount = 8) {
+  if (!NOTE_COUNTS.includes(noteCount) || noteIndex < 0 || noteIndex >= noteCount) throw new Error('Invalid scale length or note.');
   const correct = phase === 0 ? noteName(instrument.notes[noteIndex]) : instrument.patterns[noteIndex];
-  const pool = phase === 0 ? [...new Set(instrument.notes.map(noteName))] : [...new Set(instrument.patterns)];
-  if (pool.length < 4) throw new Error('An instrument needs at least four distinct choices.');
-  const distractors = shuffle(pool.filter(choice => choice !== correct), random).slice(0, 3);
+  const pool = phase === 0 ? [...new Set(instrument.notes.slice(0, noteCount).map(noteName))] : [...new Set(instrument.patterns.slice(0, noteCount))];
+  if (pool.length < 2) throw new Error('A scale needs at least two distinct choices.');
+  const distractors = shuffle(pool.filter(choice => choice !== correct), random).slice(0, Math.min(4, pool.length) - 1);
   return {correct, arr: shuffle([correct, ...distractors], random)};
 }
 
