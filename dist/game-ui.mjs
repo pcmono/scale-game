@@ -1,4 +1,5 @@
 import {DATA, shuffle, staff, diagram, makeOptions, describe} from './game-core.mjs';
+import {initTheme} from './theme.mjs';
 
 let instrument=null,order=[],index=0,phase=0,score=0,locked=false,results=[];
 const app=document.getElementById('app');
@@ -9,4 +10,4 @@ function render(){let d=DATA[instrument],n=order[index],o=makeOptions(d,n,phase)
 
 function finish(){let d=DATA[instrument];app.innerHTML=`<section class="panel finish"><div class="eyebrow">Scale complete · ${d.label}</div><h1>Nice work!</h1><div class="score">${score} / 16</div><p>One point for each note name and one for each playing choice.</p><div class="review">${order.map((v,i)=>`<div>${d.notes[v]}<br><span aria-label="Note name ${results[i][0]?'correct':'incorrect'}, playing choice ${results[i][1]?'correct':'incorrect'}">Name ${results[i][0]?'✓':'✕'} · Play ${results[i][1]?'✓':'✕'}</span></div>`).join('')}</div><button class="primary" id="again">Play again</button><p class="reference">Fingerings use common standard choices; some instruments have alternate fingerings. Check your band method book for the version your class uses.</p></section>`;document.getElementById('again').onclick=startScreen}
 
-startScreen();document.getElementById('home').addEventListener('click',startScreen);
+initTheme();startScreen();document.getElementById('home').addEventListener('click',startScreen);

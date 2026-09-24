@@ -1,5 +1,8 @@
 import {runChecks} from './checks.mjs';
 import {DATA} from './game-core.mjs';
+import {initTheme} from './theme.mjs';
+
+initTheme();
 
 const button=document.getElementById('run');
 const summary=document.getElementById('summary');
